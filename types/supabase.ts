@@ -73,9 +73,7 @@ export interface Database {
           created_at: string | null
           embedding: string | null
           id: string
-          index: number
           owner: string | null
-          pair: string | null
           role: string | null
           token_size: number | null
         }
@@ -85,9 +83,7 @@ export interface Database {
           created_at?: string | null
           embedding?: string | null
           id?: string
-          index?: number
           owner?: string | null
-          pair?: string | null
           role?: string | null
           token_size?: number | null
         }
@@ -97,11 +93,67 @@ export interface Database {
           created_at?: string | null
           embedding?: string | null
           id?: string
-          index?: number
           owner?: string | null
-          pair?: string | null
           role?: string | null
           token_size?: number | null
+        }
+      }
+      nods_page: {
+        Row: {
+          checksum: string | null
+          id: number
+          meta: Json | null
+          parent_page_id: number | null
+          path: string
+          source: string | null
+          type: string | null
+        }
+        Insert: {
+          checksum?: string | null
+          id?: number
+          meta?: Json | null
+          parent_page_id?: number | null
+          path: string
+          source?: string | null
+          type?: string | null
+        }
+        Update: {
+          checksum?: string | null
+          id?: number
+          meta?: Json | null
+          parent_page_id?: number | null
+          path?: string
+          source?: string | null
+          type?: string | null
+        }
+      }
+      nods_page_section: {
+        Row: {
+          content: string | null
+          embedding: string | null
+          heading: string | null
+          id: number
+          page_id: number
+          slug: string | null
+          token_count: number | null
+        }
+        Insert: {
+          content?: string | null
+          embedding?: string | null
+          heading?: string | null
+          id?: number
+          page_id: number
+          slug?: string | null
+          token_count?: number | null
+        }
+        Update: {
+          content?: string | null
+          embedding?: string | null
+          heading?: string | null
+          id?: number
+          page_id?: number
+          slug?: string | null
+          token_count?: number | null
         }
       }
       profiles: {
@@ -129,11 +181,32 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      ivfflathandler: {
+      get_page_parents: {
         Args: {
-          "": unknown
+          page_id: number
         }
-        Returns: unknown
+        Returns: {
+          id: number
+          parent_page_id: number
+          path: string
+          meta: Json
+        }[]
+      }
+      match_page_sections: {
+        Args: {
+          embedding: string
+          match_threshold: number
+          match_count: number
+          min_content_length: number
+        }
+        Returns: {
+          id: number
+          page_id: number
+          slug: string
+          heading: string
+          content: string
+          similarity: number
+        }[]
       }
       search_messages: {
         Args: {
@@ -144,49 +217,10 @@ export interface Database {
           chat_id?: string
         }
         Returns: {
-          id: string
           content: string
           role: string
           created_at: string
-          token_size: number
-          index: number
         }[]
-      }
-      vector_avg: {
-        Args: {
-          "": number[]
-        }
-        Returns: string
-      }
-      vector_dims: {
-        Args: {
-          "": string
-        }
-        Returns: number
-      }
-      vector_norm: {
-        Args: {
-          "": string
-        }
-        Returns: number
-      }
-      vector_out: {
-        Args: {
-          "": string
-        }
-        Returns: unknown
-      }
-      vector_send: {
-        Args: {
-          "": string
-        }
-        Returns: string
-      }
-      vector_typmod_in: {
-        Args: {
-          "": unknown[]
-        }
-        Returns: number
       }
     }
     Enums: {
