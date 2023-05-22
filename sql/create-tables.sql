@@ -23,7 +23,7 @@ create table messages (
   role text,
   chat uuid references chats (id),
   owner uuid references profiles (id),
-  embedding public.vector(1536),
+  embedding vector(1536),
   token_size integer
 );
 
